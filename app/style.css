@@ -1,0 +1,105 @@
+
+        :root{
+            --font: Cambria, serif; --hh: 100px;}
+
+        html,body{margin:0;}
+
+        body{
+            background:#000;
+            font-family: var(--font);
+            margin: 0;
+            height: 100%;
+        }
+        header{
+            align-items: center;
+            padding: 0.5em;
+            background: #fff;
+            display: grid;
+            grid-template-columns: auto auto auto auto auto;
+            justify-content: space-between;
+            font-family: var(--font);
+            position: sticky;
+            top: 0;
+            z-index:10;
+        }
+        header h1{
+            font-size: 1.5em;
+            color: #333;
+        }
+        .scroller{ 
+            position: relative;
+            height: 500vh;
+        }
+        .stage{
+            position: sticky;
+            top: var(--hh);
+            height: calc(100vh - var(--hh));
+            height: calc(100dvh - var(--hh));
+            overflow: hidden;
+        }
+        .pano{
+            position:absolute; top:0; left:0;
+            height: 100%; width: auto; max-width: none;
+            min-width: 100%; object-fit: cover;
+            will-change: transform;
+            pointer-events: none; user-select: none;
+        }
+        .track{
+            position: absolute; inset: 0;
+            display: flex;
+            will-change: transform;
+        }
+        .track > section{
+            flex: 0 0 100vw;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0,0,0,.6);
+            text-align: center;
+            padding: 2em;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .sprite{
+            position: absolute;
+            left: 0; bottom: var(--ground);
+            z-index: 5;
+            width: var(--s); height: var(--s);
+            background-repeat: no-repeat;
+            background-size: calc(var(--s) * 6) 100%;
+            transform-origin: 50% 100%;
+            will-change: transform;
+            pointer-events: none;
+            transition: opacity .35s ease, scale .35s ease;
+        }
+        .sprite.arrived{
+            opacity: 0;
+            scale: .55;
+        }
+        .npc{
+            --n: calc(var(--s) * 85);
+            position: absolute; left: var(--x, 50%); bottom: var(--ground);
+            width: var(--n); height: var(--n);
+            z-index: 2;
+        }
+        .npc-btn{
+            display: block;
+            padding: 0; border: 0; background: none;
+            background-repeat: no-repeat;
+            background-size: calc(var(--n) * 2) 100%;
+            cursor: pointer;
+            transform-origin: 50% 100%;
+            transition: transform .15s ease;
+        }
+        .npc-btn:hover{
+            transform: scale(1.05);
+        }
+        .npc-btn:focus-visible{
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+            border-radius: 12px;
+        }
+        .npc.open .npc-btn{
+            transform: translateY(-4px);
+        }
+  

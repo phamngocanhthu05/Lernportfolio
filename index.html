@@ -4,37 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>P1_26_Lernportfolio_Pham-T_261105</title>
-        <link rel="stylesheet" href="css">
+        <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
- 
-    <style>
-        :root{
-            --font: Cambria, serif;
-        }
-        header{
-            display: grid;
-            grid-template-columns: auto auto auto auto auto;
-            justify-content: space-between;
-        }
-        header h1{
-            font-size: 1.5em;
-            color: #333;
-        }
-        .scroller{ 
-            position: relative;
-            height: 500vh;
-        }
-        .stage{
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-    </style>
     </head>
 
     <body>
-        <header>
+        <header id="header">
             <h1> Ngoc Anh Thu Pham</h1>
             <p>Lernportfolio</p>
             <p>UXD</p>
@@ -43,12 +18,54 @@
         </header>
 
         <main>
-            <div class="scroller">
+            <div class="scroller" id="scroller">
+                <div class="stage" id="stage">
+                    <img class="pano" id="pano" src="panorama.png" alt="" aria-hidden="true">
+                    <div class="track" id="track">
+                        <section><h2>Start</h2></section>
+                        <section><h2>Projekt 1</h2></section>
+                        <section><h2>Projekt 2</h2></section>
+                        <section><h2>Kontakt</h2></section>
+                    </div> 
+                </div>
             </div>
         </main>
     
     <footer>
     </footer>
+
+    <script>
+        const header = document.getElementById('header');
+        const scroller = document.getElementById('scroller');
+        const stage = document.getElementById('stage');
+        const track = document.getElementById('track');
+        const pano = document.getElementById('pano');
+
+        function layout() {
+            document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
+        }
+        const travel = track.scrollWidth - stage.clientWidth;
+        scroller.style.height = (travel + stage.clientHeight) + 'px';
+        update();
+
+        function update() {
+            const maxScroll = scroller.offsetHeight - stage.clientHeight;
+            const p = maxScroll > 0
+            ? Math.min(Math.max(window.scrollY / maxScroll,0),1)
+            : 0;
+
+        const trackMax = track.scrollWidth - stage.clientWidth;
+        track.style.transform = `translate3d(${-p * trackMax}px,0,0)`;
+
+        const panoMax = Math.max(pano.offsetWidth - stage.clientWidth,0);
+        pano.style.transform = `translate3d(${-p * panoMax}px,0,0)`;
+        }
+
+        window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+        window.addEventListener('resize', layout);
+        window.addEventListener('load', layout);
+        layout();
+    </script>
 
     </body>
     </html>
